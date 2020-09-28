@@ -1,15 +1,14 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
+const app = require("express")();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const router = require("./routes");
 
-const port = 4000;
-const index = require("./routes/index");
+app.use(router);
 
-const app = express();
-app.use(index);
+io.on("connection", socket => {
+  socket.on("disconnect", () => {});
+});
 
-const server = http.createServer(app);
-
-const io = socketIo(server); // < Interesting!
-
-const getApiAndEmit = "TODO";
+http.listen(4000, () => {
+  console.log("listening on *:4000");
+});
