@@ -13,8 +13,6 @@ function App() {
     };
   }, [message]);
 
-  ddd;
-
   const onSubmit = event => {
     event.preventDefault();
 
