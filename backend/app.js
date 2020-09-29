@@ -6,7 +6,9 @@ const router = require("./routes");
 app.use(router);
 
 io.on("connection", socket => {
-  socket.on("disconnect", () => {});
+  socket.on("chat message", msg => {
+    io.emit("chat message", msg);
+  });
 });
 
 http.listen(4000, () => {
