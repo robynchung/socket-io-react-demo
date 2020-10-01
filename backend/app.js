@@ -10,9 +10,14 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(router);
 
 io.on(socketIo.connection, socket => {
-  console.log("connected ----");
+  socket.on(socketIo.newUser, data => {
+    socket.userId = data;
+
+    io.emit(socketIo.newUser, data);
+  });
+
   socket.on(socketIo.chatMessage, msg => {
-    io.emit(socketIo.chatMessage, msg);
+    io.emit(socketIo.chatMessage, { user: socket.userId, msg });
   });
 });
 

@@ -8,6 +8,8 @@ function App() {
   const [message, setMessage] = useState();
 
   useEffect(() => {
+    socket.emit(socketIo.newUser, `User${Math.floor(Math.random() * 1000000)}`);
+
     return () => {
       socket.emit("disconnect");
       socket.off();
