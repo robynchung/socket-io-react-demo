@@ -1,12 +1,16 @@
 const app = require("express")();
 const http = require("http").createServer(app);
+const cors = require("cors");
 const io = require("socket.io")(http);
 const router = require("./routes");
 const { socketIo } = require("../frontend/src/constants");
 
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
 app.use(router);
 
 io.on(socketIo.connection, socket => {
+  console.log("connected ----");
   socket.on(socketIo.chatMessage, msg => {
     io.emit(socketIo.chatMessage, msg);
   });

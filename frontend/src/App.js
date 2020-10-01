@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { inputType, socketIo } from "./constants";
 
-const socket = io("http://localhost:4000");
+const socket = io("http://localhost:4000/");
 
 function App() {
   const [message, setMessage] = useState();
