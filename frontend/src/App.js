@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { inputType } from "./constants";
+import { inputType, socketIo } from "./constants";
+
 const socket = io("http://localhost:4000");
 
 function App() {
@@ -16,9 +17,9 @@ function App() {
   const onSubmit = event => {
     event.preventDefault();
 
-    socket.emit("chat message", message);
+    socket.emit(socketIo.chatMessage, message);
 
-    socket.on("chat message", function (msg) {
+    socket.on(socketIo.chatMessage, function (msg) {
       console.log("frontend: ", msg);
     });
   };
