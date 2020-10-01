@@ -16,8 +16,19 @@ io.on(socketIo.connection, socket => {
     io.emit(socketIo.newUser, data);
   });
 
-  socket.on(socketIo.chatMessage, msg => {
-    io.emit(socketIo.chatMessage, { user: socket.userId, msg });
+  socket.on(socketIo.chatMessage, message => {
+    io.emit(socketIo.chatMessage, { user: socket.userId, message });
+  });
+
+  let broadcast = {};
+
+  socket.on(socketIo.typing, data => {
+    broadcast = data;
+    socket.broadcast.emit(socketIo.typing, broadcast);
+  });
+
+  socket.on(socketIo.disconnect, function () {
+    socket.broadcast.emit(socketIo.typing, broadcast);
   });
 });
 

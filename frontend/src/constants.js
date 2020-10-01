@@ -6,6 +6,8 @@ module.exports = {
   socketIo: {
     chatMessage: "chat message",
     connection: "connection",
-    newUser: "new user"
+    disconnect: "disconnect",
+    newUser: "new user",
+    typing: "typing"
   }
 };
