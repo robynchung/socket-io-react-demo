@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socketIo } from "../constants";
 const currentUser = `User${Math.floor(Math.random() * 1000000)}`;
 
-export default function useNewUser(socket) {
+export default function (socket) {
   useEffect(() => {
     socket.emit(socketIo.newUser, currentUser);
 

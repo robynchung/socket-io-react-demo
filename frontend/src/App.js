@@ -13,8 +13,11 @@ function App() {
 
   const onSubmit = event => {
     event.preventDefault();
-    socket.emit(socketIo.chatMessage, message);
-    setMessage("");
+
+    if (message) {
+      socket.emit(socketIo.chatMessage, message);
+      setMessage("");
+    }
   };
 
   const renderMessage = () => {

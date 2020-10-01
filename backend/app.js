@@ -13,7 +13,6 @@ io.on(socketIo.connection, socket => {
 
   socket.on(socketIo.newUser, data => {
     socket.userId = data;
-
     io.emit(socketIo.newUser, data);
   });
 

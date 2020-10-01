@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { socketIo } from "../constants";
 
-export default function useMessage(socket, message) {
+export default function (socket, message) {
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
