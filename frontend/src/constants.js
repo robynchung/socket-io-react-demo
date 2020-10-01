@@ -7,7 +7,6 @@ module.exports = {
     chatMessage: "chat message",
     connection: "connection",
     disconnect: "disconnect",
-    newUser: "new user",
-    typing: "typing"
+    newUser: "new user"
   }
 };

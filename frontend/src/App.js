@@ -7,7 +7,6 @@ const currentUser = `User${Math.floor(Math.random() * 1000000)}`;
 
 function App() {
   const [message, setMessage] = useState();
-  const [typing, setTyping] = useState({ user: "", isTyping: false });
 
   useEffect(() => {
     socket.emit(socketIo.newUser, currentUser);
@@ -18,24 +17,6 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    socket.on(socketIo.typing, data => {
-      const { isTyping, user } = data;
-      console.log(data);
-
-      if (!isTyping) {
-        setTyping(currentTyping => ({ ...currentTyping, user: "", isTyping: false }));
-      } else {
-        setTyping(currentTyping => ({ ...currentTyping, user, isTyping }));
-      }
-    });
-
-    return () => {
-      socket.emit(socketIo.disconnect);
-      socket.off();
-    };
-  }, [message]);
-
   const onSubmit = event => {
     event.preventDefault();
 
@@ -45,18 +26,10 @@ function App() {
     });
   };
 
-  const onKeyUp = () => {
-    socket.emit(socketIo.typing, {
-      isTyping: message.length > 0,
-      user: currentUser
-    });
-  };
-
   return (
     <div>
-      {typing.isTyping && <div>{typing.user} is typing</div>}
       <form onSubmit={onSubmit}>
-        <input type={inputType.text} onChange={event => setMessage(event.target.value)} onKeyUp={onKeyUp} />
+        <input type={inputType.text} onChange={event => setMessage(event.target.value)} />
         <button type={inputType.submit}>Submit</button>
       </form>
     </div>
