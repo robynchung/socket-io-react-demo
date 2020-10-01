@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { socketIo } from "../constants";
 
 export default function useMessage(socket, message) {
-  const [messageObject, setMessage] = useState();
+  const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
     socket.on(socketIo.chatMessage, msg => {
-      setMessage(msg);
+      setMessageList(currentMessageList => [...currentMessageList, msg]);
     });
 
     return () => {
       socket.emit(socketIo.disconnect);
       socket.off();
     };
-  }, [message]);
+  }, [message, socket]);
 
-  return messageObject;
+  return messageList;
 }

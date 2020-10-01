@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import io from "socket.io-client";
+import useMessage from "./hook/useMessage";
+import useNewUser from "./hook/useNewUser";
 import { inputType, socketIo } from "./constants";
 
 const socket = io("http://localhost:4000/");
-const currentUser = `User${Math.floor(Math.random() * 1000000)}`;
 
 function App() {
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
-
-  // todo create custom hook
-  useEffect(() => {
-    socket.emit(socketIo.newUser, currentUser);
-
-    return () => {
-      socket.emit(socketIo.disconnect);
-      socket.off();
-    };
-  }, []);
-
-  // todo create custom hook
-  useEffect(() => {
-    socket.on(socketIo.chatMessage, message => {
-      setMessageList(currentMessageList => [...currentMessageList, message]);
-    });
-
-    return () => {
-      socket.emit(socketIo.disconnect);
-      socket.off();
-    };
-  }, [message]);
+  const messageList = useMessage(socket, message);
+  const currentUser = useNewUser(socket);
 
   const onSubmit = event => {
     event.preventDefault();
@@ -47,6 +27,7 @@ function App() {
 
   return (
     <div>
+      {currentUser}
       <ul>{messageList.length > 0 && renderMessage()}</ul>
       <form onSubmit={onSubmit}>
         <input type={inputType.text} onChange={event => setMessage(event.target.value)} value={message} />
