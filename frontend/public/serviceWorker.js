@@ -9,6 +9,8 @@ self.addEventListener("install", event => {
   // );
 });
 
+console.log(self);
+
 // Cache and return requests
 self.addEventListener("fetch", event => {
   event.respondWith(

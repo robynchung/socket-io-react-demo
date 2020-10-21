@@ -12,5 +12,3 @@ ReactDOM.render(
 );
 
 serviceWorker.register();
-
-console.log(process.env);
