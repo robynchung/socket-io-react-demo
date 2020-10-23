@@ -9,10 +9,9 @@ self.addEventListener("install", event => {
   // );
 });
 
-console.log(self);
-
 // Cache and return requests
 self.addEventListener("fetch", event => {
+  console.log("fetch is working", event);
   event.respondWith(
     caches.match(event.request).then(function (response) {
       // Cache hit - return response
@@ -26,5 +25,5 @@ self.addEventListener("fetch", event => {
 
 // Update a service worker
 self.addEventListener("activate", event => {
-  console.log("activated ---");
+  console.log("activated ---", event);
 });
